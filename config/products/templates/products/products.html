@@ -4,6 +4,42 @@
 {% block title %}حول - Entity Medical{% endblock %}
 
 {% block content %}
+<style>
+    .search-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    
+        padding: 10px 22px;
+        font-size: 14px;
+        font-weight: 500;
+    
+        color: #374151; /* رمادي غامق */
+        background-color: #ffffff;
+    
+        border: 1px solid #d1d5db;
+        border-radius: 999px; /* بيضاوي */
+    
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+    
+    .search-btn i {
+        font-size: 13px;
+        color: #6b7280;
+    }
+    
+    .search-btn:hover {
+        background-color: #f9fafb;
+        border-color: #9ca3af;
+    }
+    
+    .search-btn:active {
+        background-color: #f3f4f6;
+    } 
+
+</style>
+
     <!-- قسم المنتجات -->
     <div class="menu-overlay" id="menuOverlay"></div>
 

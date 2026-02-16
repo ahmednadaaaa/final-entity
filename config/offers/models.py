@@ -12,7 +12,13 @@ class Offer(models.Model):
     description = models.TextField(verbose_name='الوصف')
     offer_type = models.CharField(max_length=20, choices=OFFER_TYPES, default='percentage')
     discount_value = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='قيمة الخصم')
-    
+    image = models.ImageField(
+        upload_to='offers/images/',
+        verbose_name='صورة العرض',
+        null=True,           # اختياري → يسمح بعرض بدون صورة
+        blank=True,          # اختياري → مش مطلوب في الفورم
+        # default='offers/default-offer.jpg'   ← اختياري لو عندك صورة افتراضية
+    )
     start_date = models.DateTimeField(verbose_name='تاريخ البدء')
     end_date = models.DateTimeField(verbose_name='تاريخ الانتهاء')
     

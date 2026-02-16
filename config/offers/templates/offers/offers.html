@@ -30,7 +30,13 @@
 
                 <!-- Image -->
                 <div class="offer-image">
-                    <i class="fas fa-tags"></i>
+                    {% if offer.image %}
+                        <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="offer-img">
+                    {% else %}
+                        <i class="fas fa-tags"></i>
+                        <!-- أو صورة افتراضية -->
+                        <!-- <img src="{% static 'images/default-offer.jpg' %}" alt="عرض افتراضي"> -->
+                    {% endif %}
                 </div>
 
                 <!-- Content -->

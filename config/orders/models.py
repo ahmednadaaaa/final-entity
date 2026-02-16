@@ -8,8 +8,20 @@ from products.models import Product
 # 🛒 موديل السلة
 # ========================
 class Cart(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, verbose_name='المستخدم')
-    session_key = models.CharField(max_length=40, null=True, blank=True, verbose_name='مفتاح الجلسة')
+    STATUS_CHOICES = [
+        ('active', 'نشطة'),
+        ('ordered', 'تم الطلب'),
+    ]
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='active',
+        verbose_name='حالة السلة'
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الإنشاء')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='آخر تحديث')
 

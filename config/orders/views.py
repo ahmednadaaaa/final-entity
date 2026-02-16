@@ -276,3 +276,56 @@ def api_create_order(request):
         })
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)}, status=500)
+    
+    
+
+
+@csrf_exempt
+def submit_cart(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            items = data.get("items", [])
+
+            if not items:
+                return JsonResponse({"success": False, "message": "السلة فارغة"}, status=400)
+
+            user = None
+            if request.user.is_authenticated:
+                user = request.user
+
+            # إنشاء الطلب
+            order = Order.objects.create(
+                user=user,
+                total_amount=sum([float(item.get("price", 0)) * int(item.get("quantity", 1)) for item in items])
+            )
+
+            # إضافة المنتجات
+            for item in items:
+                product_id = item.get("product_id")
+                product_name = item.get("name")
+                quantity = int(item.get("quantity", 1))
+                price = float(item.get("price", 0))
+
+                OrderItem.objects.create(
+                    order=order,
+                    product_id=product_id,  # لو المنتج موجود في الـ DB
+                    product_name=product_name,
+                    quantity=quantity,
+                    price=price
+                )
+
+            # مسح السلة
+            if user:
+                Cart.objects.filter(user=user).delete()
+            else:
+                session_key = request.session.session_key
+                if session_key:
+                    Cart.objects.filter(session_key=session_key).delete()
+
+            return JsonResponse({"success": True, "message": "تم تسجيل الطلب بنجاح ✅"})
+
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)}, status=500)
+
+    return JsonResponse({"success": False, "message": "طريقة الطلب غير صحيحة"}, status=405)

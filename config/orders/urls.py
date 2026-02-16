@@ -14,7 +14,7 @@ urlpatterns = [
     path('cart/add-all/<int:offer_id>/', views.add_all_offer_products, name='add_all_offer_products'),
 
     # REST API Endpoints
-    
+    path("submit-cart/", views.submit_cart, name="submit_cart"),
     path('api/cart/', api_views.CartAPIView.as_view(), name='api_cart'),
     path('api/cart/add/', api_views.AddToCartAPIView.as_view(), name='api_add_to_cart'),
     path('api/cart/update/', api_views.UpdateCartQuantityAPIView.as_view(), name='api_update_quantity'),
